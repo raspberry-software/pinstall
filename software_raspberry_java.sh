@@ -20,13 +20,13 @@ fi
 #Force root beyond this line
 function main() {
    utils::force_root
-   log "Perform Java install"
-   functions::install
+   utils::log "Perform Java install"
+   java::functions::install
 }
-#
+
 #================ End of Functions ==========
-#
-while getopts ":hvl:d:i" opt; do
+
+while getopts "hv:d:" opt; do
   case ${opt} in
     h )
       echo "Usage:"
@@ -38,14 +38,9 @@ while getopts ":hvl:d:i" opt; do
       exit 0
       ;;
     v )
-      LOG_VERBOSE=true
-      ;;
-    l )
+      utils::LOG_VERBOSE=true
       if [[ $OPTARG == /* ]] ; then
-        LOG_FILE=$OPTARG
-      else
-        echo "Logs directory is not valid."
-        exit 0
+        utils::LOG_FILE=$OPTARG
       fi
       ;;
     d )
@@ -53,7 +48,7 @@ while getopts ":hvl:d:i" opt; do
         JAVA_HOME_DIR=$OPTARG
       else
         echo "JAVA_HOME directory not valid"
-        exit 0
+        exit 1
       fi
       ;;
     \? )
@@ -62,9 +57,10 @@ while getopts ":hvl:d:i" opt; do
       ;;
   esac
 done
-readonly LOG_VERBOSE
-readonly LOG_FILE
+readonly utils::LOG_VERBOSE
+readonly utils::LOG_FILE
 readonly JAVA_HOME_DIR
 shift $((OPTIND -1))
-#
+
+# Main function
 main

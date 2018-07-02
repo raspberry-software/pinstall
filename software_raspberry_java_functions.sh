@@ -156,7 +156,9 @@ function perform_java_install() {
    utils::log "Java successfully installed in $JAVA_HOME_DIR"
 }
 
+# --------------------------- Public Functions ---------------------------------
 # Do nothing when java is already installed, install java otherwise
 function java::functions::install() {
    assert_java_installed || [[ perform_java_install && assert_java_installed ]]
 }
+# ------------------------ End of Public Functions -----------------------------
