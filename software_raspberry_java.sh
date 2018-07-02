@@ -20,7 +20,10 @@ fi
 #Force root beyond this line
 function main() {
    utils::force_root
-   utils::log "Perform Java install"
+   readonly LOG_VERBOSE
+   readonly LOG_FILE
+   readonly JAVA_HOME_DIR
+   utils::log "Start Java install ..."
    java::functions::install
 }
 
@@ -38,9 +41,9 @@ while getopts "hv:d:" opt; do
       exit 0
       ;;
     v )
-      utils::LOG_VERBOSE=true
+      LOG_VERBOSE=true
       if [[ $OPTARG == /* ]] ; then
-        utils::LOG_FILE=$OPTARG
+        LOG_FILE=$OPTARG
       fi
       ;;
     d )
@@ -57,9 +60,6 @@ while getopts "hv:d:" opt; do
       ;;
   esac
 done
-readonly utils::LOG_VERBOSE
-readonly utils::LOG_FILE
-readonly JAVA_HOME_DIR
 shift $((OPTIND -1))
 
 # Main function

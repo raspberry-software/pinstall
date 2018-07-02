@@ -10,15 +10,15 @@
 # This Script unique ID
 readonly software_raspberry_utils=''
 #Define Variables
-utils::LOG_VERBOSE=false
-utils::LOG_FILE=''
-utils::properties::network_iface=''
-utils::properties::network_gateway=''
-utils::properties::network_local_ip=''
-utils::properties::network_public_ip=''
-utils::properties::pi_model=''
-utils::properties::pi_name=''
-utils::properties::pi_revision=''
+LOG_VERBOSE=false
+LOG_FILE=''
+utils_properties_network_iface=''
+utils_properties_network_gateway=''
+utils_properties_network_local_ip=''
+utils_properties_network_public_ip=''
+utils_properties_pi_model=''
+utils_properties_pi_name=''
+utils_properties_pi_revision=''
 
 #-------------------------- END OF Define Variables ----------------------------
 #
@@ -31,9 +31,9 @@ function utils::br() {
 
 # Show verbose logs given as an argument. If the log_file variable is not null then save logs in a LOG_FILE instead.
 function utils::log() {
-  if $utils::LOG_VERBOSE ; then
-    if [[ ! -z "${utils::LOG_FILE// }" ]] ; then
-      echo "$1" >> $utils::LOG_FILE/logs
+  if $LOG_VERBOSE ; then
+    if [[ ! -z "${LOG_FILE// }" ]] ; then
+      echo "$1" >> $LOG_FILE/logs
     else
       echo "$1"
     fi
@@ -51,15 +51,15 @@ function utils::force_root() {
 
 # Initialize variables (properties)
 function init() {
-  utils::properties::pi_ram_total=''
-  utils::properties::local_ip=''
-  utils::properties::iface=''
-  utils::properties::pi_proc_arch=''
+  utils_properties_pi_ram_total=''
+  utils_properties_local_ip=''
+  utils_properties_iface=''
+  utils_properties_pi_proc_arch=''
   local rev=$(cat /proc/cpuinfo | grep Revision)
-  properties::pi_revision=${rev:(-6)}
+  properties_pi_revision=${rev:(-6)}
   local pi_model=""
-  properties::pi_name=$(cat /etc/os-release | grep PRETTY_NAME)
-  properties::public_ip=$(curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
+  properties_pi_name=$(cat /etc/os-release | grep PRETTY_NAME)
+  properties_public_ip=$(curl -s checkip.dyndns.org | sed -e 's/.*Current IP Address: //' -e 's/<.*$//')
   local_ip=$(ip route get 8.8.8.8 | awk '{ print $NF; exit }')
   iface=$(route | grep '^default' | grep -o '[^ ]*$')
   local gateway=$(route -n | grep 'UG[ \t]' | awk '{print $2}')
@@ -74,7 +74,7 @@ function pinfo() {
   echo "Raspberry Pi:   $pi_model"
   echo "System:         $name"
   echo "Total Memory:   $pi_ram_total"
-  br
+  utils::br
   echo "Public IP:      $public_ip"
   echo "Local IP:       $local_ip"
   echo "Gateway:        $gateway"
