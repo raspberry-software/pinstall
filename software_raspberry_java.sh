@@ -22,7 +22,7 @@ function main() {
    utils::force_root
    readonly LOG_VERBOSE
    readonly LOG_FILE
-   readonly JAVA_HOME_DIR
+   readonly DEFAULT_JAVA_HOME_DIR
    utils::log "Start Java install ..."
    java::functions::install
 }

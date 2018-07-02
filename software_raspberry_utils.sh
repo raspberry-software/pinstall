@@ -155,9 +155,9 @@ case "$subcommand" in
   prerouting)
     config_prerouting
     exit;;
-  *)
+  help)
     utils::br
-    echo "Try: bash $0 <command>"
+    echo " Usage: bash $0 <command>"
     echo " Available commands:"
     echo " pinfo                      # Prints information about Raspberry Pi"; utils::br
     echo " enablessh                  # Enable SSH"; utils::br
