@@ -31,7 +31,7 @@ do
   fi
 done
 
-function install_nowpic_client() {
+function project::nowpic::functions::install_client() {
   utils::log "Install Java if necessarily"
   java::functions::install_java
   utils::log "Create project folder structure in $project_nowpic_client_home"
@@ -49,7 +49,7 @@ function install_nowpic_client() {
   echo "exit 0" >> /etc/rc.local
 }
 
-function install_nowpic_server() {
+function project::nowpic::functions::install_server() {
   utils::log "Installing NowPic Project Server"
   utils::log "Create root dir first"
   java -jar payara-micro-5.182.jar --rootDir $project_nowpic_server_home

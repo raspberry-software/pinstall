@@ -18,16 +18,17 @@ if [ -z ${raspberry_software_install_project_nowpic_functions+x} ]; then
 fi
 #Define variables
 #
-is_install_client=false
-is_install_server=false
-#for var in "$@"
-#do
-#   if [ "$var" = "client" ]; then
-#       is_install_client=true
-#   elif [ "$var" = "server" ]; then
-#      is_install_server=true
-#   fi
-#done
+function main() {
+  java::functions::install
+  for var in "$@"
+  do
+    if [ "$var" = "server" ]; then
+      project::nowpic::functions::install_server
+    elif [ "$var" = "client" ]; then
+      project::nowpic::functions::install_client
+    fi
+  done
+}
 
 while getopts "hvl:cs" opt; do
   case ${opt} in
@@ -64,13 +65,5 @@ while getopts "hvl:cs" opt; do
   esac
 done
 shift $((OPTIND -1))
-configWifi
-#installJava
-#installNodeJS
-if [ "$is_install_server" = true ] ; then
-    installSnapiServer
-fi
-if [ "$is_install_client" = true ] ; then
-    installSnapiClient
-fi
-log "Reboot the pi to run the nowpic"
+
+main
