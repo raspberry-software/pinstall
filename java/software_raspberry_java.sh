@@ -29,38 +29,5 @@ function main() {
 
 #================ End of Functions ==========
 
-while getopts "hv:d:" opt; do
-  case ${opt} in
-    h )
-      echo "Usage:"
-      echo "-h"
-      echo "-help : Display this help info."
-      echo "-d <dir> : set JAVA_HOME directory. Default: /usr/java/latest"
-      echo "-v             : Run in verbose mode"
-      echo "-v <filename>  : Run in verbose mode and save output to file"
-      exit 0
-      ;;
-    v )
-      LOG_VERBOSE=true
-      if [[ $OPTARG == /* ]] ; then
-        LOG_FILE=$OPTARG
-      fi
-      ;;
-    d )
-      if [[ $OPTARG == /* ]] ; then
-        JAVA_HOME_DIR=$OPTARG
-      else
-        echo "JAVA_HOME directory not valid"
-        exit 1
-      fi
-      ;;
-    \? )
-      echo "Invalid Option: -$OPTARG" 1>&2
-      exit 1
-      ;;
-  esac
-done
-shift $((OPTIND -1))
-
 # Main function
 main

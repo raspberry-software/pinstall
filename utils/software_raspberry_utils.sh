@@ -69,8 +69,8 @@ function init() {
 
 # Print info
 function pinfo() {
-  echo "Raspberry Pi info:"; br
-  java -version; br
+  echo "Raspberry Pi info:";
+  utils::br
   echo "Raspberry Pi:   $pi_model"
   echo "System:         $name"
   echo "Total Memory:   $pi_ram_total"
@@ -165,3 +165,38 @@ case "$subcommand" in
     echo " prerouting <PORt1> <PORT2> # Enable prerouting from port1 -> port2"; utils::br
     exit;;
 esac
+
+while getopts "hvl:" opt; do
+  case ${opt} in
+    h )
+      echo "Usage:"
+      echo "-h"
+      echo "-help          : Display this help info."
+      echo "-v             : Run in verbose mode"
+      echo "-l <filename>  : Run in verbose mode and save output to file"
+      exit 0
+      ;;
+    l )
+      if [[ $OPTARG == /* ]] ; then
+        LOG_VERBOSE=true
+        LOG_FILE=$OPTARG
+        readonly LOG_VERBOSE
+        readonly LOG_FILE
+      else
+        echo "Logs file is invalid"
+      fi
+      echo "Logs saved in $LOG_FILE/logs"
+      break;;
+    v )
+      LOG_VERBOSE=true
+      readonly LOG_VERBOSE
+      break;;
+    \? )
+      echo "Invalid Option: -$OPTARG" 1>&2
+      exit 1
+      ;;
+  esac
+done
+shift $((OPTIND -1))
+
+utils::log "Verbose is here"
