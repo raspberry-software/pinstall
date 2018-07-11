@@ -95,10 +95,10 @@ function set_java_version() {
              exit 1
              ;;
         esac
-        ;;
+        break;;
       [Yy]* )
         utils::log "Installing Java $JAVA_VERSION ..."
-        ;;
+        break;;
       [Cc]* )
         utils::log "Java installation cancelled."
         exit 0
