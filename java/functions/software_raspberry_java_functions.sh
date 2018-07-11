@@ -73,29 +73,32 @@ function set_java_home_dir() {
 # Choose and set JAVA_HOME directory
 function set_java_version() {
   while true; do
-    read -p "Java version is $JAVA_VERSION. Continue? [Y/n] or [c] for Cancel" yn
+    echo "Default Java version is $JAVA_VERSION"
+    read -p "Continue? [Y/n] or [c] for Cancel" yn
     case $yn in
       [Nn]* )
         echo "I see."
         sleep 1
         read -p "There are three Java version in the menu. Choose [8/9/10] or [c] for Cancel" jv
         case $jv in
-          8)
+          '8')
              JAVA_VERSION='8'
-             break;;
-          9)
+             ;;
+          '9')
              JAVA_VERSION='9'
              echo "Not yet implemented"
              exit 1
-          10)
+             ;;
+          '10')
              JAVA_VERSION='10'
              echo "Not yet implemented"
              exit 1
+             ;;
         esac
-        break;;
+        ;;
       [Yy]* )
         utils::log "Installing Java $JAVA_VERSION ..."
-        break;;
+        ;;
       [Cc]* )
         utils::log "Java installation cancelled."
         exit 0
