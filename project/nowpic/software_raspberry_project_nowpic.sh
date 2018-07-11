@@ -11,13 +11,13 @@ software_raspberry_project_nowpic=''
 #If the Unique ID of the script is not defined (the script has not been loaded yet) then source the script. If the script does not exist download it and then source again.
 #The +x at the end of the variable is a parameter expansion and the expression returns true if the variable is unset
 if [ -z ${software_raspberry_utils+x} ]; then
-   [ -f software_raspberry_utils.sh ] || wget -q https://raw.githubusercontent.com/raspberry-software/pinstall/master/software_raspberry_utils.sh && . raspberry.software.utils.sh
+   [ -f software_raspberry_utils.sh ] || wget -q https://raw.githubusercontent.com/raspberry-software/pinstall/master/utils/software_raspberry_utils.sh && . software_raspberry_utils.sh
 fi
-if [ -z ${raspberry_software_install_project_nowpic_functions+x} ]; then
-   [ -f raspberry.software.install.project.nowpic.functions.sh ] || wget -q https://www.raspberrypi.software/downloads/raspberry.software.install.project.nowpic.functions.sh && . raspberry.software.install.project.nowpic.functions.sh
+if [ -z ${software_raspberry_project_nowpic_functions+x} ]; then
+   [ -f software_raspberry_project_nowpic_functions.sh ] || wget -q https://raw.githubusercontent.com/raspberry-software/pinstall/master/project/nowpic/functions/software_raspberry_project_nowpic_functions.sh && . software_raspberry_project_nowpic_functions.sh
 fi
-#Define variables
-#
+
+# Main function
 function main() {
   java::functions::install
   for var in "$@"
@@ -30,7 +30,7 @@ function main() {
   done
 }
 
-while getopts "hvl:cs" opt; do
+while getopts "hvl:" opt; do
   case ${opt} in
     h )
       echo "Usage:"
@@ -51,12 +51,6 @@ while getopts "hvl:cs" opt; do
         echo "Logs directory is not valid."
         exit 0
       fi
-      ;;
-    c )
-      is_install_client=true
-      ;;
-    s )
-      is_install_server=true
       ;;
     \? )
       echo "Invalid Option: -$OPTARG" 1>&2
