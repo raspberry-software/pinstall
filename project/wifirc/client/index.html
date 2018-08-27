@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <title>PiRC</title>
+
+        <!-- Bootstrap CSS CDN -->
+        <!--<link rel="stylesheet" href="resources/css/bootstrap.4.1.0.min.css" />-->
+        <!--<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" />-->
+        <!--<link rel="stylesheet" href="resources/css/onof.css" />-->
+        <!-- Our Custom CSS -->
+        <link rel="stylesheet" href="resources/css/test.css">
+        <link rel="stylesheet" href="resources/css/onoff.css" />
+        <link rel="stylesheet" href="resources/css/settings-test.css" />
+    </head>
+    <body>
+        <span id="growl">Hello</span>
+                            <div class="rss">
+
+                                <input type="checkbox" id="recordingControl" hidden />
+                                <label for="recordingControl" class="recording" >
+                                    <i></i>
+                                </label>
+                                <input type="checkbox" id="resolutionControl" hidden />
+                                <label for="resolutionControl" class="resolution"> <!-- class="attention" -->
+                                    <i></i>
+                                </label>
+                                <label for="dimentionsControl" class="dimentions" ></label> 
+                                <span id="start">START</span>
+                                  
+                            </div>
+
+        <div class="wrapper">
+            <!-- Sidebar Holder -->
+            <nav id="dashboard" data-width="small">
+                <!--                    <a href=""  id="sidebarCollapse" class="navbar-btn">
+                                        
+                                    </a>-->
+                <div id="dashboardCollapse" >
+                </div> 
+                <ul>
+                    <li>
+                        <div class="spacer noselect">&nbsp;</div>
+                    </li>
+                    <li>
+                        <div class="m-rocker dashboardItem" data-show="medium">
+                            <input id="lightsSwitch"  type="checkbox"  title="Light Beam" onclick="SoftwareRaspberryPi.Vehicle.Lights.switch();">
+                            <label class="lightbeam" for="lightsSwitch">Lights</label>
+                        </div>
+                        <label class="dashboardItem lightbeam" data-show="small" data-active="false" onclick="SoftwareRaspberryPi.Vehicle.Lights.switch();"></label>
+                    </li>
+                    <!--                    <li>
+                                            <div class="m-rocker dashboardItem" data-show="medium">
+                                                <input id="soundSwitch"  type="checkbox"  title="Stop" onclick="SoftwareRaspberryPi.Vehicle.Sound.Engine.switch();">
+                                                <label class="volume" for="soundSwitch">Sound</label>
+                                            </div>
+                                            <label class="dashboardItem volume" data-show="small" onclick="$('#growl').text('Engine STOP...');"></label>
+                                        </li>-->
+                    <li>
+                        <div class="m-rocker dashboardItem" data-show="medium">
+                            <input id="dashCamSwitch"  type="checkbox"  title="Dash Cam" onclick="SoftwareRaspberryPi.Vehicle.DashCam.switch();"><label class="dashcam" for="dashCamSwitch">Dash Cam</label>
+                        </div>
+                        <label class="dashboardItem dashcam" data-show="small" onclick="$('#growl').text('Dashcam...');"></label>
+                    </li>
+                    <li>
+                        <div class="m-rocker dashboardItem" data-show="medium">
+                            <input id="throttleSwitch" type="checkbox"  title="Speed" onclick="SoftwareRaspberryPi.Vehicle.Engine.Throttle.switch();"><label class="throttle" for="throttleSwitch">Dash Cam</label>
+                        </div>
+                        <label class="dashboardItem throttle" data-show="small" onclick="$('#growl').text('Engine STOP...');"></label>
+                    </li>
+                    <li>
+                        <div class="spacer">&nbsp;
+                        </div>
+                    </li>
+                    <li>
+                        <div class="dashboardItem noselect" data-active="false" data-show="medium">
+                            <!--<a class="control">-->
+                            <label id="powerSwitch" class="powerControl" data-active="false"></label>
+                            <span></span>
+                            <!--</a>-->
+                        </div>
+                        <label id="powerControlSmall" class="dashboardItem power powerControl" data-active="false" data-show="small"> </label>
+                    </li>
+
+                </ul>
+            </nav>
+            <div id="steeringPanel">
+                 <!--Page Content Holder--> 
+                <canvas id="windscreen" class="low">
+                </canvas>                
+            </div>
+
+        </div>
+
+        <!-- jQuery CDN -->
+        <script src="resources/js/jquery.3.3.1.min.js"></script>
+        <script src="resources/js/nipplejs.min.js"></script>
+        <script src="resources/js/rpi.js"></script>
+
+        <script type="text/javascript">
+                            $(document).ready(function () {
+                                // GEAR
+                                 var joystick = nipplejs.create({
+                                    zone: document.getElementById('steeringPanel'),
+                                    color: 'darkgrey',
+                                    size: 160,
+                                    threshold: 0.1, // before triggering a directional event
+//                    fadeTime: Integer,              // transition time
+                                    multitouch: false,
+                                    maxNumberOfNipples: 1, // when multitouch, what is too many?
+                                    dataOnly: false, // no dom element whatsoever
+//                    position: Object,               // preset position for 'static' mode
+                                    mode: 'dynamic', // 'dynamic', 'static' or 'semi'
+                                    restJoystick: true
+//                    restOpacity: Number,            // opacity when not 'dynamic' and rested
+//                    catchDistance: Number           // distance to recycle previous joystick in
+//                                                    // 'semi' mode                    
+                                });
+//                                joystick.destroy();
+//                                  | Dashboard Toggler Events-------------------------------------------------------   
+                                $("#dashboard ul li .dashboardItem[data-show='small']").css("display", "table-cell");
+                                $("#dashboard ul li .dashboardItem[data-show='small']").css("opacity", "1");
+                                $('#dashboardCollapse').on('click', function () {
+                                    if ($("#dashboard").attr("data-width") === "small") {
+                                        $("#dashboard").attr("data-width", "medium");
+                                        $("#dashboard ul li .dashboardItem").css("display", "none");
+                                        $("#dashboard ul li .dashboardItem").css("opacity", "0");
+                                        $("#dashboard ul li .dashboardItem[data-show='medium']").css("display", "table-cell");
+                                        $("#dashboard ul li .dashboardItem[data-show='medium']").css("opacity", "1");
+                                    } else if ($("#dashboard").attr("data-width") === "medium") {
+                                        $("#dashboard").attr("data-width", "small");
+                                        $("#dashboard ul li .dashboardItem").css("display", "none");
+                                        $("#dashboard ul li .dashboardItem").css("opacity", "0");
+                                        $("#dashboard ul li .dashboardItem[data-show='small']").css("display", "table-cell");
+                                        $("#dashboard ul li .dashboardItem[data-show='small']").css("opacity", "1");
+                                    }
+                                });
+//                                  | POWER Button Events-------------------------------------------------------
+                                var divMouseDown;
+                                $(".powerControl").mousedown(function () {
+                                    if (SoftwareRaspberryPi.Vehicle.Sound.Engine.working === true) {
+//                                        turn off engine
+                                        SoftwareRaspberryPi.Vehicle.Sound.Engine.off();
+//                                        $("#powerSwitch").removeClass("on");
+                                        $(".powerControl").attr("data-active", "false");
+                                        $("#growl").text("Engine STOP...");
+                                    } else {
+                                        // start off engine
+                                        $("#growl").text("Engine start off...");
+                                        divMouseDown = setTimeout(function () {
+//                                          Engine working
+                                            SoftwareRaspberryPi.Vehicle.Sound.Engine.on();
+                                            // Do timeout action...
+                                            $("#growl").text("Engine goes on and on...");
+                                            $(".powerControl").attr("data-active", "true");
+                                        }, 1200);
+                                    }
+                                });
+                                $(".powerControl").mouseup(function () {
+                                    if (divMouseDown) {
+                                        clearTimeout(divMouseDown);
+                                    }
+                                });
+                                $('#start').on('click', function () {
+                                    $(".rss").hide();
+                                });
+                                
+                                //Settings
+                                $('#resolutionControl').change(function(){
+                                    if($(this).is(':checked')) {
+                                        // Set resolution to high.
+                                        $("#windscreen").toggleClass("low","high");
+                                    } else {
+                                        $("#windscreen").toggleClass("low","high");
+                                    }
+                                });
+//                                  | -------------------------------------------------------
+                            });
+
+
+
+
+
+//                                    $(document).ready(function () {
+////                                        $('#sidebarCollapse').on('click', function () {
+////                                            $('#sidebar').toggleClass('active');
+////                                        });
+//                                        $('#sidebarCollapse').on('click', function () {
+//                                            $('#sidebar').toggleClass('active');
+//                                            $(this).toggleClass('active');
+//                                        });
+//                                        var divMouseDown;
+//                                        $('#onoff').mousedown(function () {
+//                                            if ($(this).hasClass("on")) {
+//                                                $(this).removeClass("on");
+//                                            } else {
+//                                                divMouseDown = setTimeout(function () {
+//                                                    // Do timeout action...
+//                                                    $("#onoff").toggleClass("on");
+//                                                }, 1400);
+//                                            }
+//                                        });
+//                                        $('#onoff').mouseup(function () {
+//                                            if (divMouseDown) {
+//                                                clearTimeout(divMouseDown);
+//                                            }
+//                                        });
+//                                    });
+
+        </script>
+    </body>
+</html>

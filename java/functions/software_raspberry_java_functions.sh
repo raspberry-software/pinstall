@@ -13,6 +13,7 @@ software_raspberry_java_functions=''
 if [ -z ${software_raspberry_utils+x} ]; then
   [ -f software_raspberry_utils.sh ] || wget -q https://raw.githubusercontent.com/raspberry-software/pinstall/master/utils/software_raspberry_utils.sh && . software_raspberry_utils.sh
 fi
+
 #Define variables
 JAVA_HOME_DIR=/usr/java/latest
 JAVA_VERSION='8'
@@ -44,12 +45,17 @@ function unpack_java_files() {
 # Choose and set JAVA_HOME directory
 function set_java_home_dir() {
   while true; do
-    read -p "Default JAVA HOME directory is $JAVA_HOME_DIR. Continue? [Y/n] or [c] for Cancel" yn
+    utils::br
+    echo "Default JAVA HOME directory is $JAVA_HOME_DIR"
+    read -p "Continue? [Y/n] or [c] for Cancel" yn
     case $yn in
       [Nn]* )
         echo "Oh, I can see you know what you're doing."
         sleep 1
         read -p "Very well. Where to install java?" jdir
+        if [[ $jdir == /* ]] ; then
+          sudo mkdir -p $jdir
+        fi
         if [ -d "$jdir" ]; then
           JAVA_HOME_DIR=$jdir
         else
@@ -58,7 +64,7 @@ function set_java_home_dir() {
         fi
         break;;
       [Yy]* )
-        utils::log "Java will be installed in $JAVA_HOME_DIR ..."
+        utils::log "Java will be installed in $JAVA_HOME_DIR"
         break;;
       [Cc]* )
         utils::log "Java installation cancelled."
@@ -153,9 +159,13 @@ function config_java() {
   utils::log "Update alternatives"
   sudo chgrp -R root /usr/java/latest
   sudo chown -R root /usr/java/latest
-  sudo update-alternatives --install "/usr/bin/java" "java" "/usr/java/latest/bin/java" 1
-  sudo update-alternatives --install "/usr/bin/javac" "javac" "/usr/java/latest/bin/javac" 1
+  sudo update-alternatives --install "/usr/bin/java" "java" "$JAVA_HOME_DIR/bin/java" 1
+  sudo update-alternatives --install "/usr/bin/javac" "javac" "$JAVA_HOME_DIR/bin/javac" 1
   utils::log "Update JAVA_HOME environment variables"
+  # Remove all JAVA_HOME variables
+  sudo sed -i '/JAVA_HOME/d' /etc/bash.bashrc
+  sudo sed -i '/JAVA_HOME/d' /etc/environment
+  # Add JAVA_HOME variables
   echo "export JAVA_HOME=$JAVA_HOME_DIR" >> /etc/bash.bashrc
   echo "JAVA_HOME=$JAVA_HOME_DIR" >> /etc/environment
   export JAVA_HOME=$JAVA_HOME_DIR
@@ -198,6 +208,6 @@ function perform_java_install() {
 # --------------------------- Public Functions ---------------------------------
 # Do nothing when java is already installed, install java otherwise
 function java::functions::install() {
-  perform_java_install && assert_java_version
+  perform_java_install
 }
 # ------------------------ End of Public Functions -----------------------------
