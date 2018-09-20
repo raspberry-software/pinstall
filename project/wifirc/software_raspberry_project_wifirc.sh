@@ -6,7 +6,7 @@
 # Created on 25-Apr-2018, 11:50:31
 #
 #This Script unique ID
-software_raspberry_project_wifi=''
+software_raspberry_project_wifirc=''
 #Dependencies
 #If the Unique ID of the script is not defined (the script has not been loaded yet) then source the script. If the script does not exist download it and then source again.
 #The +x at the end of the variable is a parameter expansion and the expression returns true if the variable is unset
@@ -24,10 +24,10 @@ fi
 #
 # Main function
 function main() {
+  node::functions::install
   for var in "$@"
   do
     if [ "$var" = "server" ]; then
-      node::functions::install
       project::wifirc::functions::install_server
     elif [ "$var" = "client" ]; then
       project::wifirc::functions::install_client

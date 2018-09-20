@@ -72,7 +72,7 @@ function create_start_stream_script {
    echo "cd $PROJECT_HOME" >> $PROJECT_HOME/control/start-dashcam-stream.sh
    echo '#Stream video in the background process' >> $PROJECT_HOME/control/start-dashcam-stream.sh
    echo 'function startDashcamStream {' >> $PROJECT_HOME/control/start-dashcam-stream.sh
-   echo '   nohup ffmpeg -f v4l2 -framerate 25 -video_size 640x480 -i /dev/video0 -f mpegts -vcodec mpeg1video -s 640x480 -b:v 800k -bf 0 http://localhost:8081/supersecret >/dev/null 2>&1 &' >> $PROJECT_HOME/control/start-dashcam-stream.sh
+   echo '   nohup ffmpeg -f v4l2 -framerate 25 -video_size 640x480 -i /dev/video0 -f mpegts -vcodec mpeg1video -s 640x480 -b:v 900k -bf 0 http://localhost:8081/supersecret >/dev/null 2>&1 &' >> $PROJECT_HOME/control/start-dashcam-stream.sh
    echo '   local dashcam_stream_pid=$!' >> $PROJECT_HOME/control/start-dashcam-stream.sh
    echo '   echo "$dashcam_stream_pid" > $PWD/dashcam-stream-pid' >> $PROJECT_HOME/control/start-dashcam-stream.sh
    echo '}' >> $PROJECT_HOME/control/start-dashcam-stream.sh
@@ -101,5 +101,6 @@ function project::wifirc::functions::install_server {
 }
 function project::wifirc::functions::install_client {
    #Install http files
-   
+  sudo npm -g install http-server
+  
 }
