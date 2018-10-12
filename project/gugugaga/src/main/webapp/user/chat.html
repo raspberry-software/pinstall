@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CHAT</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes">
+        <link rel="stylesheet" href="resources/css/basic.css" />
+        
+    </head>
+    <body>
+        <div class="main__menu">
+            <a href="/agata/logout" title="logout"><img width="32" height="26" src="resources/images/logout.svg" alt="logout"/></a>
+        </div>
+        <div class="demo">
+            <svg class="sidebar" viewBox="0 0 300 500">
+            <path class="s-path" fill="#fff" d="M0,0 50,0 a0,250 0 1,1 0,500 L0,500" />
+            </svg>
+            <div class="static">
+                <div class="static__text">Welcome</div>
+                <div id="commonName" class="static__text2"></div>
+            </div>
+            <div class="sidebar-content">
+<!--                <div id="user" class="contact" data-username="" data-colour="" >
+                    <img width="48" height="48" src="resources/images/agata-icon-small.jpg" alt="" class="contact__photo" />
+                    <span class="contact__name" data-common-name=""></span>
+                    <span class="contact__status online" ></span>
+                </div>-->
+            </div>
+            <div class="chat">
+                <span class="chat__back"></span>
+                <!--<span class="chat__status">status</span>-->
+                <div id="chat-target-user" class="chat__person" data-username="">
+                    <span class="chat__online active"></span>
+                    <span class="chat__name" data-common-name=""></span>
+                </div>
+                <div class="chat__messages">
+                </div>
+                <input id="message_input" class="chat__input" type="text" placeholder="Message" />
+            </div>
+            <input id="user" data-username="" data-colour="" hidden />
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" ></script>
+        <script src="resources/js/javae-websocket.js" ></script>
+        <script src="resources/js/chat.chunk.stream.js" ></script>
+        <script src="resources/js/basic.js"></script>
+
+<script>
+</script>
+    </body>
+</html>

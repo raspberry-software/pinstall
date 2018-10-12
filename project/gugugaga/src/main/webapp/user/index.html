@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>User Account</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
+        <link href="https://fonts.googleapis.com/css?family=Stalemate" rel="stylesheet">
+        <style type="text/css">
+
+            .login-page {
+                width: 360px;
+                padding: 8% 0 0;
+                margin: auto;
+            }
+            .form {
+                position: relative;
+                z-index: 1;
+                background: #FFFFFF;
+                max-width: 360px;
+                margin: 0 auto 100px;
+                padding: 45px;
+                text-align: center;
+                box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+            }
+            .form input {
+                font-family: "Roboto", sans-serif;
+                outline: 0;
+                background: #f2f2f2;
+                width: 100%;
+                border: 0;
+                margin: 0 0 15px;
+                padding: 15px;
+                box-sizing: border-box;
+                font-size: 14px;
+            }
+            .form button {
+                font-family: "Roboto", sans-serif;
+                text-transform: uppercase;
+                outline: 0;
+                background: #4CAF50;
+                width: 100%;
+                border: 0;
+                padding: 15px;
+                color: #FFFFFF;
+                font-size: 14px;
+                -webkit-transition: all 0.3 ease;
+                transition: all 0.3s ease;
+                cursor: pointer;
+            }
+            .form button:hover,.form button:active,.form button:focus {
+                background: #43A047;
+            }
+            .form .message {
+                margin: 15px 0 0;
+                color: #b3b3b3;
+                font-size: 12px;
+            }
+            .form .message a {
+                color: #4CAF50;
+                text-decoration: none;
+            }
+            .form .register-form {
+                display: none;
+            }
+            .container {
+                position: relative;
+                z-index: 1;
+                max-width: 300px;
+                margin: 0 auto;
+            }
+            .container:before, .container:after {
+                content: "";
+                display: block;
+                clear: both;
+            }
+            .container .info {
+                margin: 50px auto;
+                text-align: center;
+            }
+            .container .info h1 {
+                margin: 0 0 15px;
+                padding: 0;
+                font-size: 36px;
+                font-weight: 300;
+                color: #1a1a1a;
+            }
+            .container .info span {
+                color: #4d4d4d;
+                font-size: 12px;
+            }
+            .container .info span a {
+                color: #000000;
+                text-decoration: none;
+            }
+            .container .info span .fa {
+                color: #EF3B3A;
+            }
+            body {
+                background: #76b852; /* fallback for old browsers */
+                background: -webkit-linear-gradient(right, #76b852, #8DC26F);
+                background: -moz-linear-gradient(right, #76b852, #8DC26F);
+                background: -o-linear-gradient(right, #76b852, #8DC26F);
+                background: linear-gradient(to left, #76b852, #8DC26F);
+                font-family: "Roboto", sans-serif;
+                -webkit-font-smoothing: antialiased;
+                -moz-osx-font-smoothing: grayscale;      
+            }
+#watermark
+{
+ position:fixed;
+ bottom:40px;
+ left:5px;
+ opacity:0.6;
+ z-index:99;
+ text-align: center;
+    -ms-transform: rotate(45deg); /* IE 9 */
+    -ms-transform-origin: 20% 40%; /* IE 9 */
+    -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+    -webkit-transform-origin: 20% 40%; /* Chrome, Safari, Opera */
+    transform: rotate(45deg);
+    transform-origin: 20% 40%;
+ 
+}
+#watermark span{
+     /*font-family: 'Ruthie', cursive;*/
+     font-family: 'Stalemate', cursive;
+}
+#watermark span.watermark-line-1 {
+     color:white;
+    font-size: 2.5em;
+}
+
+#watermark span.watermark-line-2 {
+     color:white;
+    font-size: 1.5em;
+    }
+        </style>
+        <link rel="stylesheet" href="resources/css/palette-color-picker.css" />
+    </head>
+    <body>
+        <!-- 
+        contact form created for treehouse competition.
+        -->
+        <div class="main__menu">
+            <a href="/agata/logout" title="logout"><img width="32" height="26" src="resources/images/logout.svg" alt="logout"/></a>
+        </div>
+        <div class="login-page">
+            <div class="form">
+                <form class="register-form">
+                    <p>Success!</p>
+                    <p>User data changed.</p>
+                    <p class="message">Start chat? <a href="chat.html">Yes</a><br />
+                        or Go Back <a href="/agata/index.html">Home</a></p>
+                </form>
+                <form  method="post" action="https://devjs.software/agata/rest/users/edit">
+                    <h3>Update preferences</h3>
+                    <input  type="password" name="password" placeholder="change password" /><br />
+                    <input  type="text" name="imageUrl" placeholder="change image" /><br />
+                    <div class="palette-color-picker-bubble" style="display: none;"><span class="swatch" title="#D50000" data-color="#D50000" data-name="#D50000" style="background-color: rgb(213, 0, 0);"></span><span class="swatch" title="#304FFE" data-color="#304FFE" data-name="#304FFE" style="background-color: rgb(48, 79, 254);"></span><span class="swatch active" title="#00B8D4" data-color="#00B8D4" data-name="#00B8D4" style="background-color: rgb(0, 184, 212);"></span><span class="swatch" title="#69F0AE" data-color="#69F0AE" data-name="#69F0AE" style="background-color: rgb(105, 240, 174);"></span><span class="swatch" title="#FFFF00" data-color="#FFFF00" data-name="#FFFF00" style="background-color: rgb(255, 255, 0);"></span><span class="swatch" title="#F8BBD0" data-color="#F8BBD0" data-name="#F8BBD0" style="background-color: rgb(248, 187, 208);"></span></div>
+                    <input type="text" id="user-colour" name="colour" placeholder="change colour" hidden="" />
+                    <button id="editUser" type="submit">Update</button>
+                </form>
+                <br />
+                <form action="chat.html">
+                    <button type="submit">Start chat</button>
+                    <p class="message">Back <a href="/agata/index.html">Home</a></p>
+                </form>
+            </div>
+        </div>
+        <div id="watermark"><span class="watermark-line-1">GuGuGaGa</span><br /><span class="watermark-line-2">.chat</span></div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="resources/js/palette-color-picker.min.js"></script>
+        <script>
+            $('.message a').click(function () {
+                $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+            });
+            $('#editUser').click(function () {
+                $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+            });
+            $('#user-colour').paletteColorPicker({
+                colors: ['#D50000', '#304FFE', '#00B8D4', '#69F0AE', '#FFFF00', '#F8BBD0'],
+                clear_btn: null
+            });
+        </script>
+    </body>
+</html>
